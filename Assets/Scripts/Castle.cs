@@ -8,12 +8,12 @@ public class Castle : MonoBehaviour
 
     void GetDamaged(float damage)
     {
-        print("Damaged, current health: "+health);
         health -= damage;
         if(health <= 0.0f)
         {
             Die();
         }
+        print("Damaged, current health: "+health);
     }
     void Die()
     {

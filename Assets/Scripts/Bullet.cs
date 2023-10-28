@@ -7,21 +7,42 @@ public class Bullet : MonoBehaviour
 {
     public Transform target;
     public float speed = 10.0f;
+    public float size = 1.0f;
+    public float damage =  1.0f;
+    public float timeToLive = 3.0f;
+    private Vector3 direction;
 
-    private void Update()
+
+    void Start(){
+        Destroy(gameObject,timeToLive);
+    }
+    void Update()
     {
         if (target == null)
         {
-            Destroy(gameObject);
-            return;
+            //Destroy(gameObject);
         }
-
-        Vector3 direction = (target.position - transform.position).normalized;
+        else
+        {
+            direction = (target.position - transform.position).normalized;
+        }
         Vector3 velocity = direction * speed;
         transform.Translate(velocity * Time.deltaTime);
     }
     void OnTriggerEnter(Collider collision)
     {
-
+        if (collision.tag=="Enemy")
+        {
+            collision.SendMessage("Die");
+            Destroy(gameObject);
+        }
+        if (collision.tag=="Floor")
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
     }
 }

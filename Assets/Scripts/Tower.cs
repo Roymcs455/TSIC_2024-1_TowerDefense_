@@ -8,6 +8,7 @@ public class Tower : MonoBehaviour
     // Start is called before the first frame update
     public List<GameObject> enemiesAtRange;
     public GameObject objective;
+    public Transform muzzle;
     public Bullet projectile;
     public float fireRate = 01.5f;
     private float nextFireTime =0.0f;
@@ -56,7 +57,7 @@ public class Tower : MonoBehaviour
     }
     void Update()
     {
-
+        
         if (enemiesAtRange.Count !=0)
         {
             if(objective == null)
@@ -67,11 +68,12 @@ public class Tower : MonoBehaviour
                 nextFireTime =Time.time + 1f/fireRate;
             }
         }
+        muzzle.LookAt(objective.transform);
     }
 
     private void Shoot()
     {
-        Bullet newProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
+        Bullet newProjectile = Instantiate(projectile, muzzle.transform.position, Quaternion.identity);
         newProjectile.SetTarget(objective.transform);
     }
 }

@@ -11,6 +11,10 @@ public class Spawn : MonoBehaviour
     [SerializeField] GameObject enemy;
     [SerializeField] float enemySpeed=3.0f;
     
+    void Start()
+    {
+        InvokeRepeating("SpawnEnemy",5.0f,1.0f);
+    }
     public void SpawnEnemy(){
         if(Castle!= null)
         {
@@ -22,10 +26,12 @@ public class Spawn : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetKeyDown("space"))
-        {
-            SpawnEnemy();
-        }
+        // if(Input.GetKeyDown("space"))
+        // {
+        //     SpawnEnemy();
+        // }
+
+
     }
     
 }

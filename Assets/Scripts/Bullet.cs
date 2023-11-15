@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
 
     void Start(){
         Destroy(gameObject,timeToLive);
+        gameObject.transform.localScale = new Vector3(size,size,size);
     }
     void Update()
     {

@@ -10,6 +10,7 @@ public class Tower : MonoBehaviour
     public GameObject objective;
     public Transform muzzle;
     public Bullet projectile;
+    public float bulletSize =0.5f;
     public float fireRate = 01.5f;
     private float nextFireTime =0.0f;
     void OnTriggerEnter(Collider collision)
@@ -75,5 +76,6 @@ public class Tower : MonoBehaviour
     {
         Bullet newProjectile = Instantiate(projectile, muzzle.transform.position, Quaternion.identity);
         newProjectile.SetTarget(objective.transform);
+        newProjectile.size = bulletSize;
     }
 }

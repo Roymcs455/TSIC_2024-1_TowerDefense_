@@ -113,5 +113,5 @@ MonoBehaviour:
   target: {fileID: 0}
   speed: 10
   size: 1
-  damage: 1
+  damage: 30
   timeToLive: 3

@@ -6,11 +6,23 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    enum EnemyType
+    {
+        Skeleton,
+        Ogre,
+        Wolf,
+        Flayer,
+        Imp,
+        Dragon
+
+    }
+    [SerializeField]EnemyType type = EnemyType.Skeleton;
     [SerializeField] private Transform movePositionTransform;
     
-    private float health;
-    private float movementSpeed=1.0f;
-    private float damage= 10.0f;
+    public float baseHealth = 100.0f;
+    private float currentHealth;
+    public float movementSpeed=1.0f;
+    private float baseDamage= 10.0f;
     private NavMeshAgent navMeshAgent;
     private Rigidbody rg;
 
@@ -19,11 +31,12 @@ public class Enemy : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = movementSpeed;
         rg = GetComponent<Rigidbody>();
+        currentHealth = baseHealth;
     }
     private void Update()
     {
-        navMeshAgent.destination = movePositionTransform.position;
         
+        navMeshAgent.destination = movePositionTransform.position;
     }
     public void SetObjective(Transform objective)
     {
@@ -34,7 +47,15 @@ public class Enemy : MonoBehaviour
         if (collision.tag=="Castle")
         {
             Debug.Log("Entra enemigo");
-            collision.SendMessage("GetDamaged",damage,SendMessageOptions.DontRequireReceiver);
+            collision.SendMessage("GetDamaged",baseDamage,SendMessageOptions.DontRequireReceiver);
+            Die();
+        }
+    }
+    void GetDamaged(float damage)
+    {
+        currentHealth -= damage;
+        if(currentHealth <= 0.0f)
+        {
             Die();
         }
     }

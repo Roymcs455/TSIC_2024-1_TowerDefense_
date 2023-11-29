@@ -20,10 +20,10 @@ public class Castle : MonoBehaviour
     }
     void Die()
     {
-        gameObject.SetActive(false);
+        
         GameManager.Instance.GameOver();
     }
-    void StartGame()
+    public void StartGame()
     {
         health = 100.0f;
     }

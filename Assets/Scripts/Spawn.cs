@@ -12,7 +12,7 @@ public class Spawn : MonoBehaviour
     [SerializeField] Transform Castle;
     [SerializeField] GameObject[] enemies;
     //[SerializeField] float enemySpeed=3.0f;
-    public float spawnRate = 2.0f; // Objects spawned per second
+    
     [SerializeField]private int enemiesPerWave;
     private float nextSpawnTime = 0.0f;
     private int enemyCount = 0;
@@ -48,7 +48,7 @@ public class Spawn : MonoBehaviour
             }
             instantiatedEnemy.SendMessage("SetObjective",Castle);
             enemyCount++;
-            if(enemyCount>= 100)
+            if(enemyCount>= 20)
             {
                 enemyCount = 0;
                 IncreaseSpawnRate();
@@ -59,7 +59,7 @@ public class Spawn : MonoBehaviour
     }
     public void IncreaseSpawnRate()
     {
-        spawnRate+= 1.5f;
+        GameManager.spawnRate+= .2f;
     }
     void Update()
     {
@@ -71,7 +71,7 @@ public class Spawn : MonoBehaviour
             if (Time.time >= nextSpawnTime)
             {
                 SpawnEnemy();
-                nextSpawnTime = Time.time + 1f / spawnRate; // Calculate next spawn time based on spawn rate
+                nextSpawnTime = Time.time + 1f / GameManager.spawnRate; // Calculate next spawn time based on spawn rate
             }
 
     }

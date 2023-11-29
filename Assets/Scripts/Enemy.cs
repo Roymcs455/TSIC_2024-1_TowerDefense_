@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
     }
     void GetDamagedByPercent(float percent)
     {
-        currentHealth = (1-percent)*currentHealth;
+        currentHealth -= percent*baseHealth;
         if(currentHealth <= 0.0f)
         {
             Die();

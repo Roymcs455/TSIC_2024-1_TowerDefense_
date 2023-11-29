@@ -19,20 +19,33 @@ public class Tower : MonoBehaviour
     public GameObject bomb;
     
     public float bulletSize =0.5f;
-    public float fireRate = 1.5f;
     [SerializeField] towerType type = towerType.Archer;
     private float nextFireTime =0.0f;
     private SphereCollider sphereCollider;
-    private float CurrentDamage = 10;
-    private float firingRange = 10;
+    private float firingRange = 10f;
+    private float CurrentDamage = 10f;
+    private float fireRate = 1.5f;
+    public float BaseDamage = 10f;
+    public float BaseRange = 10f;
+    public float BaseFireRate = 1.5f;
 
+    public int upgradePrice = 20; 
     public LineRenderer line;
-    
+    public int GetPrice(){return upgradePrice;}
     void Start()
     {
         sphereCollider = GetComponent<SphereCollider>();
         sphereCollider.radius = firingRange;
-        line = GetComponent<LineRenderer>();        
+        line = GetComponent<LineRenderer>();    
+        Restart();    
+    }
+    public void Restart()
+    {
+        fireRate = BaseFireRate;
+        CurrentDamage = BaseDamage;
+        firingRange = BaseRange;
+        upgradePrice = 20;
+        sphereCollider.radius = firingRange;
     }
     void OnTriggerEnter(Collider collision)
     {
@@ -87,7 +100,19 @@ public class Tower : MonoBehaviour
             }
         }
         if(objective != null)
+        {
             muzzle.LookAt(objective.transform);
+            if(type == towerType.Mage)
+            {
+                line.positionCount=2;
+                line.SetPosition(0,muzzle.position);
+                line.SetPosition(1,objective.transform.position);
+            }
+        }
+        else
+        {
+            DeleteLine();
+        }
     }
 
     void DeleteLine()
@@ -112,10 +137,6 @@ public class Tower : MonoBehaviour
                 newBomb.size = bulletSize;
             break;
             case towerType.Mage:
-                line.positionCount=2;
-                line.SetPosition(0,muzzle.position);
-                line.SetPosition(1,objective.transform.position);
-                Invoke("DeleteLine",0.2f);
                 objective.SendMessage("GetDamagedByPercent",CurrentDamage/100.0f);
 
             break;
@@ -124,17 +145,40 @@ public class Tower : MonoBehaviour
         }
         
     }
+    public void Upgrade()
+    {
+        GameManager.playerScore -=upgradePrice;
+        upgradePrice+=upgradePrice;
+        switch(type)
+        {
+            case towerType.Archer:
+                IncreaseFiringRange();
+                IncreaseAttackSpeed();
+            break;
+            case towerType.Mage:
+                IncreaseDamage();
+                IncreaseDamage();
+            break;
+            case towerType.Bomb:
+                IncreaseAttackSpeed();  
+                IncreaseDamage();              
+            break;
+            default:
+            break;
+        }
+    }
     void IncreaseDamage()
     {
-        CurrentDamage += CurrentDamage*.1f;
+        CurrentDamage += CurrentDamage*.60f;
     }
     void IncreaseAttackSpeed()
     {
-        fireRate += fireRate*.1f;
+        fireRate += fireRate*2.0f;
     }
     void IncreaseFiringRange()
     {
-        firingRange += firingRange*.1f;
+        firingRange += firingRange*0.8f;
+        sphereCollider.radius = firingRange;
     }
     
 }

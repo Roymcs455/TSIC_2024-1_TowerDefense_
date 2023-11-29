@@ -8,12 +8,12 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
     public GameObject StartScreen;
-    public GameObject TutorialScreen;
     public GameObject GameOverScreen;
-
     public GameObject GameHUD;
-    private static int playerScore = 0;
-    [SerializeField]private GameObject[] towers;
+    public GameObject[] towers;
+    public static int playerScore = 0;
+    public static float spawnRate = 2.0f;
+    
     public enum GameStates
     {
         StartScreen,
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
         GameOver,
     }
     public static GameStates currentState;
+    [SerializeField]Castle castle;
 
     private void Awake()
     {
@@ -33,18 +34,24 @@ public class GameManager : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(gameObject);
         StartScreen.SetActive(true);
-        //scoreText = GetComponent<TextMeshProUGUI>();
+        
         towers = GameObject.FindGameObjectsWithTag("Tower");
+        
 
     }
     public void StartGame()
     {
         currentState = GameStates.Playing;
         StartScreen.SetActive(false);
-        TutorialScreen.SetActive(false);
         GameOverScreen.SetActive(false);
         GameHUD.SetActive(true);
         playerScore = 0;
+        castle.StartGame();
+        spawnRate = 2.0f;
+        foreach (var item in towers)
+        {
+            item.SendMessage("Restart");
+        }
 
     }
     public void AddScore(int score)
@@ -64,6 +71,7 @@ public class GameManager : MonoBehaviour
         currentState = GameStates.GameOver;
         DestroyAllEnemies();
         GameOverScreen.SetActive(true);
+        GameHUD.SetActive(false);
     }
     public void DestroyAllEnemies()
     {
@@ -75,7 +83,12 @@ public class GameManager : MonoBehaviour
     }
     public void Quit()
     {
-        System.Diagnostics.Process.GetCurrentProcess().Kill();
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        //System.Diagnostics.Process.GetCurrentProcess().Kill();
+        Application.Quit();
+        #endif
     }
     
     

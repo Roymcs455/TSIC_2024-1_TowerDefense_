@@ -138,7 +138,8 @@ MonoBehaviour:
   type: 0
   movePositionTransform: {fileID: 0}
   baseHealth: 100
-  movementSpeed: 5
+  movementSpeed: 3
+  baseDamage: 10
 --- !u!54 &5325319993262067776
 Rigidbody:
   m_ObjectHideFlags: 0

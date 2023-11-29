@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     public float baseHealth = 100.0f;
     private float currentHealth;
     public float movementSpeed=1.0f;
-    private float baseDamage= 10.0f;
+    [SerializeField] private float baseDamage= 10.0f;
     private NavMeshAgent navMeshAgent;
     private Rigidbody rg;
 
@@ -59,8 +59,30 @@ public class Enemy : MonoBehaviour
             Die();
         }
     }
+    void GetDamagedByPercent(float percent)
+    {
+        currentHealth = (1-percent)*currentHealth;
+        if(currentHealth <= 0.0f)
+        {
+            Die();
+        }
+    }
     void Die ()
     {
+        switch (type)
+        {
+            case EnemyType.Skeleton:
+                GameManager.Instance.AddScore(8);
+            break;
+            case EnemyType.Ogre:
+                GameManager.Instance.AddScore(30);
+            break;
+            case EnemyType.Wolf:
+                GameManager.Instance.AddScore(2);
+            break;
+            default:
+            break;
+        }
         Destroy(gameObject);
     }
 }

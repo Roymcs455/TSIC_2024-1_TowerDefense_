@@ -8,9 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/duplicate.unity
     guid: b85c8e169ac394f4286618586c689aa1
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 0113b76ff037bbe49ab74f7d732edcda, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 1223fcdf904decf49abaa2a889a5212d, type: 2}

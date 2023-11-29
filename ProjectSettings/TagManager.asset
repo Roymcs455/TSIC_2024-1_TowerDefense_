@@ -8,6 +8,7 @@ TagManager:
   - Castle
   - Floor
   - Wall
+  - Tower
   layers:
   - Default
   - TransparentFX

@@ -51,15 +51,17 @@ public class Bomb : MonoBehaviour
     void Explode( )
     {
         GameObject explodeArea =  new GameObject("ExplodeZone");
-        explodeArea.AddComponent<Explosion>();
+        explodeArea.AddComponent<Explosion>().SetDamage(damage);
         explodeArea.transform.position = transform.position;
         SphereCollider collider = explodeArea.AddComponent<SphereCollider>();
         collider.isTrigger = true;
         collider.radius = explosionArea;
 
     }
+    public void SetDAmage(float currentDamage){damage = currentDamage;}
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;
     }
+    public void SetDamage (float currentDamage){damage = currentDamage;}
 }

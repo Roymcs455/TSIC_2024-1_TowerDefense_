@@ -19,17 +19,20 @@ public class Tower : MonoBehaviour
     public GameObject bomb;
     
     public float bulletSize =0.5f;
-    public float fireRate = 01.5f;
+    public float fireRate = 1.5f;
     [SerializeField] towerType type = towerType.Archer;
     private float nextFireTime =0.0f;
     private SphereCollider sphereCollider;
-    
+    private float CurrentDamage = 10;
+    private float firingRange = 10;
+
+    public LineRenderer line;
     
     void Start()
     {
         sphereCollider = GetComponent<SphereCollider>();
-        sphereCollider.radius = 10;
-        
+        sphereCollider.radius = firingRange;
+        line = GetComponent<LineRenderer>();        
     }
     void OnTriggerEnter(Collider collision)
     {
@@ -83,7 +86,13 @@ public class Tower : MonoBehaviour
                 nextFireTime =Time.time + 1f/fireRate;
             }
         }
-        muzzle.LookAt(objective.transform);
+        if(objective != null)
+            muzzle.LookAt(objective.transform);
+    }
+
+    void DeleteLine()
+    {
+        line.positionCount=0;
     }
 
     private void Shoot()
@@ -103,10 +112,29 @@ public class Tower : MonoBehaviour
                 newBomb.size = bulletSize;
             break;
             case towerType.Mage:
+                line.positionCount=2;
+                line.SetPosition(0,muzzle.position);
+                line.SetPosition(1,objective.transform.position);
+                Invoke("DeleteLine",0.2f);
+                objective.SendMessage("GetDamagedByPercent",CurrentDamage/100.0f);
+
             break;
             default:
             break;
         }
         
     }
+    void IncreaseDamage()
+    {
+        CurrentDamage += CurrentDamage*.1f;
+    }
+    void IncreaseAttackSpeed()
+    {
+        fireRate += fireRate*.1f;
+    }
+    void IncreaseFiringRange()
+    {
+        firingRange += firingRange*.1f;
+    }
+    
 }

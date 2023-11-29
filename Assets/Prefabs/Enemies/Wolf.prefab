@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3978818081865315518}
   - component: {fileID: 5325319993262067776}
   m_Layer: 0
-  m_Name: Skeleton
+  m_Name: Wolf
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c9b410503827e654783560f29672652f, type: 2}
+  - {fileID: 2100000, guid: a3f816774f4b31e47b8a4317b7b00016, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137,8 +137,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   movePositionTransform: {fileID: 0}
-  baseHealth: 100
-  movementSpeed: 5
+  baseHealth: 25
+  movementSpeed: 8
+  baseDamage: 4
 --- !u!54 &5325319993262067776
 Rigidbody:
   m_ObjectHideFlags: 0

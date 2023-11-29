@@ -46,4 +46,5 @@ public class Bullet : MonoBehaviour
     {
         target = newTarget;
     }
+    public void SetDamage(float currentDamage){damage = currentDamage;}
 }

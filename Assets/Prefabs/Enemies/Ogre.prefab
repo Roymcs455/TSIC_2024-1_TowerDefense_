@@ -29,10 +29,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9198709916061593460}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.48, y: 2.07, z: -25.18}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c9b410503827e654783560f29672652f, type: 2}
+  - {fileID: 2100000, guid: c5a9d0fac62a1814a91c22a45ead9d72, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,7 +110,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 9198709916061593460}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.52
+  m_Radius: 1
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -135,9 +135,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6fc180b9a4254408e51661c7aa8c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   movePositionTransform: {fileID: 0}
   baseHealth: 500
   movementSpeed: 1
+  baseDamage: 50
 --- !u!54 &106026223026998153
 Rigidbody:
   m_ObjectHideFlags: 0

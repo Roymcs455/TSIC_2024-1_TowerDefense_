@@ -7,35 +7,72 @@ using UnityEngine.UI;
 public class Spawn : MonoBehaviour
 {
     // Start is called before the first frame update
+    public bool test = false;
+    [SerializeField] Transform[] spawnPoints = new Transform[4];
     [SerializeField] Transform Castle;
-    [SerializeField] GameObject skeleton;
-    [SerializeField] GameObject ogre;
-    [SerializeField] GameObject wolf;
-    [SerializeField] GameObject flayer;
-    [SerializeField] GameObject imp;
-    [SerializeField] GameObject dragon;
-    [SerializeField] float enemySpeed=3.0f;
+    [SerializeField] GameObject[] enemies;
+    //[SerializeField] float enemySpeed=3.0f;
+    public float spawnRate = 2.0f; // Objects spawned per second
+    [SerializeField]private int enemiesPerWave;
+    private float nextSpawnTime = 0.0f;
+    private int enemyCount = 0;
+
     
     void Start()
     {
-        InvokeRepeating("SpawnEnemy",5.0f,1.0f);
+        if(test)
+            InvokeRepeating("SpawnEnemy",5.0f,1.0f);
+        
+        
     }
     public void SpawnEnemy(){
         if(Castle!= null)
         {
-            GameObject instantiatedEnemy = Instantiate(ogre,transform.position,transform.rotation);
+            int randomSpawnPoint = Random.Range(0,4);
+            int randomEnemy = Random.Range(0,100);
+            GameObject instantiatedEnemy;
+            if(randomEnemy <= 33)
+            {
+                //Instanciar Wolf
+                instantiatedEnemy = Instantiate(enemies[0],spawnPoints[randomSpawnPoint].position,spawnPoints[randomSpawnPoint].rotation);
+            }
+            else if(randomEnemy <= 85)
+            {
+                //Instanciar Skeleton
+                instantiatedEnemy = Instantiate(enemies[1],spawnPoints[randomSpawnPoint].position,spawnPoints[randomSpawnPoint].rotation);
+            }
+            else 
+            {
+                //Instanciar Ogre;
+                instantiatedEnemy = Instantiate(enemies[2],spawnPoints[randomSpawnPoint].position,spawnPoints[randomSpawnPoint].rotation);
+            }
             instantiatedEnemy.SendMessage("SetObjective",Castle);
-            //instantiatedEnemy.GetComponent<NavMeshAgent>().speed=enemySpeed;
+            enemyCount++;
+            if(enemyCount>= 100)
+            {
+                enemyCount = 0;
+                IncreaseSpawnRate();
+            }
+
 
         }
     }
+    public void IncreaseSpawnRate()
+    {
+        spawnRate+= 1.5f;
+    }
     void Update()
     {
-        // if(Input.GetKeyDown("space"))
-        // {
-        //     SpawnEnemy();
-        // }
-
+        if(Input.GetKeyDown("space"))
+        {
+            SpawnEnemy();
+        }
+        if(GameManager.currentState==GameManager.GameStates.Playing)
+            if (Time.time >= nextSpawnTime)
+            {
+                SpawnEnemy();
+                nextSpawnTime = Time.time + 1f / spawnRate; // Calculate next spawn time based on spawn rate
+            }
 
     }
     
